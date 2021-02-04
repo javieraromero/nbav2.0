@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <% for(let game of games) { %>
+        <a href='<%= game.homeStartDate %>/<%= game.gameId %>'>
+            <h3><%= game.vTeam.triCode %></h3>
+            <span><%= game.vTeam.score %></span>
+            <h3><%= game.hTeam.triCode %></h3>
+            <span><%= game.hTeam.score %></span>
+        </a>
+        <hr>
+    <% } %>
+</body>
+</html>

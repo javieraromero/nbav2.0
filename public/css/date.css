@@ -1,0 +1,39 @@
+body {
+    background-color: rgb(245, 245, 245);
+}
+
+.gameTable {
+    padding-top: 5px;
+    padding-bottom: 5px;
+    margin: 8px auto;
+    width: 75%;
+    background-color: rgb(235, 235, 235);
+    border-radius: 12px;
+}
+
+.teamName {
+    font-weight: 400;
+}
+
+.score {
+    font-size: x-large;
+}
+
+.teamName, .score {
+    display: block;
+}
+
+.teamCol {
+    text-align: center;
+    width: 35%;
+}
+
+.middleCol {
+    text-align: center;
+    width: 30%;
+}
+
+a:link, a:visited {
+    text-decoration: none!important;
+    color: inherit;
+}

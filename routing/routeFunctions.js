@@ -7,7 +7,6 @@ module.exports = {
         let currentDay = String(currentDate.getDate());
         let currentDayFormatted = currentDay <= 9? "0" + currentDay : currentDay;
         let formattedDate = currentYear + currentMonthFormatted + currentDayFormatted;
-
         return formattedDate;
     }
 }

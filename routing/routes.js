@@ -1,27 +1,19 @@
 const routeFunctions = require('./routeFunctions');
-const fetch = require('node-fetch');
+const appRoot = require('app-root-path');
+
+const pages = `${ appRoot }\\pages\\`;
 
 module.exports = app => {
     app.get('/', (req, res) => {
         let date = routeFunctions.getDate();
-        res.redirect(`/${date}`);
-    });
-    
-    app.get('/:date', (req, res) => {
-        let { date } = req.params;
-        fetch(`http://data.nba.net/10s/prod/v1/${ date }/scoreboard.json`)
-            .then(res => res.json())
-            .then(data => {
-                res.render('date', {...data})
-            });
+        res.redirect(`/date?date=${ date }`);
     });
 
-    app.get('/:date/:gameId', (req, res) => {
-        let { date, gameId } = req.params;
-        fetch(`http://data.nba.net/prod/v1/${ date }/${ gameId }_boxscore.json`)
-            .then(res => res.json())
-            .then(data => {
-                res.render('game', {...data})
-            });
+    app.get('/date', (req, res) => {
+        res.render(`${ pages }date`);
+    });
+
+    app.get('/game', (req, res) => {
+        res.render(`${ pages }game`);
     });
 };

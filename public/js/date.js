@@ -17,7 +17,7 @@ async function run(){
 async function getData() {
     try {
         let tempStatusNums = [];
-        const data = await (await fetch(`http://data.nba.net/10s/prod/v1/${ date }/scoreboard.json`)).json();
+        const data = await (await fetch(`https://data.nba.net/10s/prod/v1/${ date }/scoreboard.json`)).json();
         const games = data.games;
         for(let i = 0; i < games.length; i++) {
             const game = games[i];

@@ -1,7 +1,7 @@
 const routeFunctions = require('./routeFunctions');
 const appRoot = require('app-root-path');
 
-const pages = `${ appRoot }\\pages\\`;
+const pages = `${ appRoot }/pages/`;
 
 module.exports = app => {
     app.get('/', (req, res) => {

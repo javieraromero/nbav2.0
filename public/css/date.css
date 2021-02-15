@@ -2,6 +2,12 @@ body {
     background-color: rgb(245, 245, 245);
 }
 
+#dateBtns {
+    margin: auto;
+    width: 50%;
+    text-align: center;
+}
+
 .gameTable {
     padding-top: 5px;
     padding-bottom: 5px;
@@ -31,6 +37,11 @@ body {
 .middleCol {
     text-align: center;
     width: 30%;
+}
+
+.teamLogo {
+    max-height: 65px;
+    max-width: 130px;
 }
 
 a:link, a:visited {

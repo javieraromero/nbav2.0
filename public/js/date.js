@@ -71,10 +71,9 @@ function initGame(game, i) {
     table.appendChild(firstRow);
     gameLink.appendChild(table);
 
-    //firstRow.id = `game${ i }firstRow`;
-    //vTeamCol.id = `game${ i }vTeamCol`;
+    gameLink.className = 'gameLink';
+
     middleCol.id = `game${ i }middleCol`;
-    //hTeamCol.id = `game${ i }hTeamCol`;
     gameLink.id = `game${ i }`;
     table.className = 'gameTable';
     vTeamCol.className = 'teamCol';
@@ -85,11 +84,13 @@ function initGame(game, i) {
     let hTeam = teams[game.hTeam.teamId];
 
     vTeamCol.innerHTML = `
-        <span class='teamName'>${ vTeam.simpleName }</span>
+        <span class='teamName' id='teamSimpleName'>${ vTeam.simpleName }</span>
+        <span class='teamName' id='teamTricode'>${ vTeam.tricode }</span>
         <img class='teamLogo' src='${ vTeam.secondaryLogoLocation }'>
         <span class='score' id='game${ i }vTeamScore'>${ game.vTeam.score }</span>`;
     hTeamCol.innerHTML = `
-        <span class='teamName'>${ hTeam.simpleName }</span>
+        <span class='teamName' id='teamSimpleName'>${ hTeam.simpleName }</span>
+        <span class='teamName' id='teamTricode'>${ hTeam.tricode }</span>
         <img class='teamLogo' src='${ hTeam.secondaryLogoLocation }'>
         <span class='score' id='game${ i }hTeamScore'>${ game.hTeam.score }</span>`;
     

@@ -1,24 +1,47 @@
 body {
     background-color: rgb(245, 245, 245);
+    /* background-image: linear-gradient(to right, red, gray, black); */
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-#dateBtns {
+.dateBtnsDiv {
     margin: auto;
     width: 50%;
     text-align: center;
+}
+
+.dateBtn {
+    background-color: rgb(215, 215, 215);
+    border-radius: 8px;
+    padding: 4px;
+}
+
+.gameLink {
+    display: block;
+    width: 75%;
+    margin: auto;
 }
 
 .gameTable {
     padding-top: 5px;
     padding-bottom: 5px;
     margin: 8px auto;
-    width: 75%;
+    width: 100%;
     background-color: rgb(235, 235, 235);
     border-radius: 12px;
 }
 
+#teamTricode {
+    display: none;
+}
+
+#teamSimpleName {
+    display: block;
+}
+
 .teamName {
     font-weight: 400;
+    font-size: large;
 }
 
 .score {
@@ -36,6 +59,7 @@ body {
 
 .middleCol {
     text-align: center;
+    font-size: large;
     width: 30%;
 }
 
@@ -47,4 +71,48 @@ body {
 a:link, a:visited {
     text-decoration: none!important;
     color: inherit;
+}
+
+@media (max-width: 992px) {
+    .dateBtnsDiv {
+        margin: auto;
+        width: 75%;
+        text-align: center;
+    }
+
+    .gameLink {
+        display: block;
+        width: 80%;
+        margin: auto;
+    }
+
+    #teamTricode {
+        display: none;
+    }
+
+    #teamSimpleName {
+        display: block;
+    }
+}
+
+@media (max-width: 768px) {
+    .dateBtnsDiv {
+        margin: auto;
+        width: 100%;
+        text-align: center;
+    }
+
+    .gameLink {
+        display: block;
+        width: 95%;
+        margin: auto;
+    }
+
+    #teamTricode {
+        display: block;
+    }
+
+    #teamSimpleName {
+        display: none;
+    }
 }

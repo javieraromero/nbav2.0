@@ -32,47 +32,17 @@ async function getData() {
         const games = data.games;
         for(let i = 0; i < games.length; i++) {
             const game = games[i];
-            if(document.querySelector(`#game${ i }`)) {
+            if(!document.querySelector(`#game${ i }`)) {
                 const statusNum = game.statusNum;
                 tempStatusNums.push(statusNum);
-                const vTeamCol = document.querySelector(`#game${ i }vTeamCol`);
-                const middleCol = document.querySelector(`#game${ i }middleCol`);
-                const hTeamCol = document.querySelector(`#game${ i }hTeamCol`);
 
-                buildCols(game, vTeamCol, middleCol, hTeamCol);
+                initGame(game, i);
                 
             } else {
                 const statusNum = game.statusNum;
                 tempStatusNums.push(statusNum);
-                const gameLink = document.createElement('a');
-
-                gameLink.href = `game?date=${ date }&gameId=${ game.gameId }`;
-
-                const table = document.createElement('table');
-                const firstRow = document.createElement('tr');
-                const vTeamCol = document.createElement('td');
-                const middleCol = document.createElement('td');
-                const hTeamCol = document.createElement('td');
-
-                firstRow.appendChild(vTeamCol);
-                firstRow.appendChild(middleCol);
-                firstRow.appendChild(hTeamCol);
-                table.appendChild(firstRow);
-                gameLink.appendChild(table);
-
-                //firstRow.id = `game${ i }firstRow`;
-                vTeamCol.id = `game${ i }vTeamCol`;
-                middleCol.id = `game${ i }middleCol`;
-                hTeamCol.id = `game${ i }hTeamCol`;
-                gameLink.id = `game${ i }`;
-                table.className = 'gameTable';
-                vTeamCol.className = 'teamCol';
-                middleCol.className = 'middleCol';
-                hTeamCol.className = 'teamCol';
-
-                buildCols(game, vTeamCol, middleCol, hTeamCol);
-
-                document.body.append(gameLink);
+                
+                updateGame(game, i);
             }
             statusNums = tempStatusNums;
         }
@@ -84,25 +54,68 @@ async function getData() {
     }
 }
 
-function buildCols(game, vTeamCol, middleCol, hTeamCol) {
+function initGame(game, i) {
+    const gameLink = document.createElement('a');
+
+    gameLink.href = `game?date=${ date }&gameId=${ game.gameId }`;
+
+    const table = document.createElement('table');
+    const firstRow = document.createElement('tr');
+    const vTeamCol = document.createElement('td');
+    const middleCol = document.createElement('td');
+    const hTeamCol = document.createElement('td');
+
+    firstRow.appendChild(vTeamCol);
+    firstRow.appendChild(middleCol);
+    firstRow.appendChild(hTeamCol);
+    table.appendChild(firstRow);
+    gameLink.appendChild(table);
+
+    //firstRow.id = `game${ i }firstRow`;
+    //vTeamCol.id = `game${ i }vTeamCol`;
+    middleCol.id = `game${ i }middleCol`;
+    //hTeamCol.id = `game${ i }hTeamCol`;
+    gameLink.id = `game${ i }`;
+    table.className = 'gameTable';
+    vTeamCol.className = 'teamCol';
+    middleCol.className = 'middleCol';
+    hTeamCol.className = 'teamCol';
 
     let vTeam = teams[game.vTeam.teamId];
     let hTeam = teams[game.hTeam.teamId];
 
     vTeamCol.innerHTML = `
         <span class='teamName'>${ vTeam.simpleName }</span>
-        <img src="${ vTeam.secondaryLogoLocation }" class="teamLogo">
-        <span class='score'>${ game.vTeam.score }</span>`;
+        <img class='teamLogo' src='${ vTeam.secondaryLogoLocation }'>
+        <span class='score' id='game${ i }vTeamScore'>${ game.vTeam.score }</span>`;
     hTeamCol.innerHTML = `
         <span class='teamName'>${ hTeam.simpleName }</span>
-        <img src="${ hTeam.secondaryLogoLocation }" class="teamLogo">
-        <span class='score'>${ game.hTeam.score }</span>`;
+        <img class='teamLogo' src='${ hTeam.secondaryLogoLocation }'>
+        <span class='score' id='game${ i }hTeamScore'>${ game.hTeam.score }</span>`;
+    
+    updateMiddleCol(game, middleCol);
 
+    document.body.append(gameLink);
+}
+
+function updateGame(game, i) {
+
+    const vTeamScore = document.querySelector(`#game${ i }vTeamScore`);
+    vTeamScore.innerText = `${ game.vTeam.score }`;
+    const hTeamScore = document.querySelector(`#game${ i }hTeamScore`);
+    hTeamScore.innerText = `${ game.hTeam.score }`;
+
+    const middleCol = document.querySelector(`#game${ i }middleCol`);
+
+    updateMiddleCol(game, middleCol);
+}
+
+function updateMiddleCol(game, middleCol) {
     let topLabel = '';
     let bottomLabel = '';
     
     let statusNum = game.statusNum;
-    if(statusNum == 1) {
+    if(statusNum === 1) {
         const isStartTimeTBD = game.isStartTimeTBD;
         if(isStartTimeTBD) {
             topLabel = "TBD";
@@ -110,7 +123,7 @@ function buildCols(game, vTeamCol, middleCol, hTeamCol) {
             topLabel = game.startTimeEastern;
         }
         bottomLabel = '';
-    } else if(statusNum == 2) {
+    } else if(statusNum === 2) {
         let quartersElapsed = game.period.current;
         let clock = game.clock;
         let isHalftime = game.period.isHalftime;
@@ -123,17 +136,17 @@ function buildCols(game, vTeamCol, middleCol, hTeamCol) {
             else
                 topLabel = `End of Q${ quartersElapsed }`;
         } else {
-        if(quartersElapsed > 4)
-            topLabel = `${ quartersElapsed > 5 ? String(quartersElapsed - 4) : '' }OT`;
-        else
-            topLabel = `Q${ quartersElapsed }`;
+            if(quartersElapsed > 4)
+                topLabel = `${ quartersElapsed > 5 ? String(quartersElapsed - 4) : '' }OT`;
+            else
+                topLabel = `Q${ quartersElapsed }`;
         }
         bottomLabel = `${ clock }`;
-    } else if(statusNum == 3) {
+    } else if(statusNum === 3) {
         topLabel = "Final";
         let quartersElapsed = game.period.current;
         if(quartersElapsed > 4)
-            topLabel += ` (${ quartersElapsed > 5 ? String(quartersElapsed - 4) : ''}OT)`;
+            topLabel += ` (${ quartersElapsed > 5 ? String(quartersElapsed - 4) : '' }OT)`;
     }
 
     middleCol.innerText = `${topLabel} \n ${bottomLabel}`;
@@ -169,8 +182,7 @@ function setPreviousAndNextDate() {
     return [ previousDate, nextDate ];
 }
 
-function setLongDate()
-{
+function setLongDate() {
     let year = Number(date.slice(0, 4));
     let month = Number(date.slice(4, 6));
     let day = Number(date.slice(6, ));
@@ -187,5 +199,3 @@ function checkStatusNums() {
 function sleep(ms) {
     return new Promise(resolve => setTimeout(resolve, ms));
 }
-
-console.log(teams)
